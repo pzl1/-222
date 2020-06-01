@@ -69,7 +69,6 @@ export default {
   },
 
   methods: {
-    //获取瀑布流数据
     async getspsj(i = 1) {
       const result = await this.$api.zdm.product(i);
 
@@ -110,10 +109,8 @@ export default {
 
   async mounted() {
     this.getspsj();
-    //获取轮播图数据
     const result = await this.$api.zdm.swip();
     console.log(result.data.data.navList);
-    //把一个数组拆分成多个数组
     const arr = result.data.data.navList;
     const len = 2;
     function split_array(arr, len) {
@@ -124,19 +121,24 @@ export default {
       }
       return result;
     }
-    //把多个数组插入swp中
     this.swp.push(...split_array(arr, len));
     console.log(this.swp);
-    //new Swiper的时候，轮播图还未遍历，
-    this.$nextTick(() => {
-      var mySwiper = new Swiper(".swiper-container", {
-        loop: false,
-        slidesPerView: "auto",
-        loopedSlides: 5,
-      });
-    });
+    // console.log(...this.swp);
   },
-  //监视轮播图数据
+  watch: {
+    swp: {
+      handler: function() {
+        this.$nextTick(() => {
+          var mySwiper = new Swiper(".swiper-container", {
+            loop: false,
+            slidesPerView: "auto",
+            loopedSlides: 5,
+          });
+        });
+      },
+      immediate: true,
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -212,19 +214,49 @@ export default {
         }
       }
     }
+    // overflow-x: auto;
+    // overflow: auto;
+    // div {
+    //   margin: 20px 0;
+    //   width: 90px;
+    //   display: flex;
+    //   flex-direction: column;
+    //   justify-content: center;
+    //   align-items: center;
+
+    //   .p1 {
+    //     font-size: 14px;
+    //     font-weight: 700;
+    //   }
+    //   .p2 {
+    //     font-size: 12px;
+    //     color: rgb(141, 140, 140);
+    //   }
+    // }
+    // img {
+    //   width: 60px;
+    //   height: 60px;
+    //   border-radius: 50%;
+    //   // margin: 10px;
+    // }
   }
 }
 
 .splb {
   width: 100%;
-
+  // margin: auto;
+  // height: 200px;
+  // float: left;
+  // border: 1px solid #ccc;
   margin: 150px auto 0;
   display: flex;
   justify-content: center;
-
+  // align-items: center;
   flex-wrap: wrap;
   background-color: rgb(238, 238, 238);
+  // overflow: auto;
 
+  // height: 100%;
   .sp {
     width: 45%;
     height: 300px;
@@ -239,6 +271,7 @@ export default {
       height: 170px;
     }
     div {
+      // height: 60px;
       font-size: 14px;
       padding: 5px;
     }

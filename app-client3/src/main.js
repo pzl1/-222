@@ -13,7 +13,8 @@ import {
   Button,
   Overlay,
   List,
-  NavBar
+  NavBar,
+  Tag
 } from 'vant';
 import * as api from "./api"
 Vue.use(Swipe);
@@ -28,7 +29,9 @@ Vue.use(Button);
 Vue.use(Overlay);
 Vue.use(List);
 Vue.use(NavBar);
+Vue.use(Tag);
 Vue.prototype.$api = api
+Vue.prototype.$bus = new Vue();
 new Vue({
   render: h => h(App),
   router

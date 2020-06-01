@@ -1,7 +1,7 @@
 <template>
   <div class="qb">
     <div class="search">
-      <van-search placeholder="搜索商品，共254615款好物" />
+      <van-search placeholder="搜索商品，共254615款好物" @focus="onSearch" />
     </div>
     <div class="fl">
       <div class="left">
@@ -77,39 +77,11 @@ export default {
       }
       console.log(this.Product);
     },
-
-    // async onLoad(a = 0) {
-    //   const result = await this.$api.fl.getflsj(a);
-
-    //   // console.log(result.data.subCateList);
-    //   if (a > 3) {
-    //     this.Product = result.data.subCateList;
-    //     this.loading = false;
-    //   } else {
-    //     this.Product = result.data.categoryList;
-    //     this.loading = false;
-    //   }
-    //   this.finished = true;
-    //   // if (this.list.length >= this.Product.length) {
-    //   //   this.finished = true;
-    //   // }
-    //   console.log(this.Product);
-    //   // 异步更新数据
-    //   // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-    //   // setTimeout(() => {
-    //   //   for (let i = 0; i < 10; i++) {
-    //   //     this.list.push(this.list.length + 1);
-    //   //   }
-
-    //   //   // 加载状态结束
-    //   //   this.loading = false;
-
-    //   //   // 数据全部加载完成
-    //   //   if (this.list.length >= 40) {
-    //   //     this.finished = true;
-    //   //   }
-    //   // }, 1000);
-    // },
+    //搜索栏获取焦点
+    onSearch() {
+      this.$router.push("/search");
+      // console.log(11);
+    },
   },
 };
 </script>

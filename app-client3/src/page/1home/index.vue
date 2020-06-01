@@ -12,7 +12,10 @@
             />
           </h1>
 
-          <van-search placeholder="搜索商品，共254615款好物" />
+          <van-search
+            placeholder="搜索商品，共254615款好物"
+            @focus="onSearch"
+          />
           <van-button class="loginBtn">登录</van-button>
         </div>
         <div class="nav-selsect">
@@ -477,6 +480,11 @@ export default {
 
     showPopup() {
       this.show = true;
+    },
+    //搜索栏获取焦点
+    onSearch() {
+      this.$router.push("/search");
+      // console.log(11);
     },
   },
 };

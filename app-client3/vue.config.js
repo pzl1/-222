@@ -21,6 +21,13 @@ module.exports = {
         //   '^/api': '', // rewrite path
         // }
       },
+      '/xhr': {
+        target: 'https://m.you.163.com/', // 目标地址
+        changeOrigin: true // 是否进行跨域
+        // pathRewrite: {
+        //   '^/api': '', // rewrite path
+        // }
+      },
       // 处理/api开头地址
       '': {
         target: 'http://localhost:9527/', // 目标地址

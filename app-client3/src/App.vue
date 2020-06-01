@@ -3,8 +3,8 @@
   <div class="a">
     <!-- <home /> -->
     <router-view></router-view>
-    <div class="b">
-      <van-tabbar>
+    <div class="b" v-show="isnav">
+      <van-tabbar v-model="active" v-if="isnav">
         <van-tabbar-item icon="home-o">
           <router-link to="/">
             首页
@@ -20,7 +20,12 @@
             值得买
           </router-link>
         </van-tabbar-item>
-        <van-tabbar-item icon="shopping-cart-o">购物车</van-tabbar-item>
+
+        <van-tabbar-item icon="shopping-cart-o">
+          <router-link to="/shopping">
+            购物车
+          </router-link>
+        </van-tabbar-item>
         <van-tabbar-item icon="user-circle-o">个人</van-tabbar-item>
       </van-tabbar>
     </div>
@@ -33,7 +38,11 @@
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      active: 0,
+
+      isnav: true,
+    };
   },
 
   //生命周期 - 创建完成（访问当前this实例）
