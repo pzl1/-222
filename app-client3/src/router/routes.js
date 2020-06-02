@@ -3,6 +3,7 @@ import classify from "../page/2classify" //分类
 import worth from "../page/3worth" //值得买
 import shopping from "../page/4.shopping"
 import search from "../page/4.search"
+import personage from "../page/5.personage"
 export default [{
         path: "/",
         component: home
@@ -21,5 +22,9 @@ export default [{
     {
         path: "/search",
         component: search
+    },
+    {
+        path: "/personage",
+        component: personage
     }
 ]

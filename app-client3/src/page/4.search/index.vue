@@ -40,19 +40,19 @@ export default {
   async mounted() {
     const result = await this.$api.search.search();
     // const result2 = await this.$api.search.searchname("a");
-
+    // console.log(result);
     this.tag = result.data.data.hotKeywordVOList;
     // const result3 = await this.$api.zdm.swip();
     // console.log(result3);
-    this.$bus.$emit("nav", false);
+    // this.$bus.$emit("nav", false);
   },
   methods: {
     async onSearch(val) {
       //   this.issech = false;
       //   console.log(Toast(val));
-      console.log(val);
+      // console.log(val);
       const result2 = await this.$api.search.searchname(val);
-      console.log(result2.data.data);
+      // console.log(result2.data.data);
       this.name = result2.data.data;
       if (this.name.length > 0) {
         this.issech = false;
@@ -60,9 +60,18 @@ export default {
         this.issech = true;
       }
     },
+    //取消按钮
     onCancel() {
+      // console.log(this.$route.query.name);
       //   Toast("取消");
-      this.$router.push("/");
+      // this.$bus.$on("push", function(a) {
+      //   console.log(a);
+      // });
+      if (this.$route.query.name) {
+        this.$router.push(`${this.$route.query.name}`);
+      } else {
+        this.$router.push("/");
+      }
     },
   },
 };

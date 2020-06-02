@@ -26,7 +26,9 @@
             购物车
           </router-link>
         </van-tabbar-item>
-        <van-tabbar-item icon="user-circle-o">个人</van-tabbar-item>
+        <van-tabbar-item icon="user-circle-o">
+          <router-link to="/personage">个人</router-link>
+        </van-tabbar-item>
       </van-tabbar>
     </div>
   </div>
@@ -48,7 +50,24 @@ export default {
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（访问DOM元素）
-  mounted() {},
+  mounted() {
+    // this.$nextTick(() => {
+    this.$bus.$on("isnav", function(a) {
+      this.isnav = a;
+      console.log(this.isnav);
+    });
+    // });
+  },
+  // watch: {
+  //   isnav: {
+  //     handler: function() {
+  //       this.$nextTick(() => {
+  //         this.isnav = !this.isnav;
+  //       });
+  //     },
+  //     immediate: true,
+  //   },
+  // },
 };
 </script>
 <style lang="less" scoped>

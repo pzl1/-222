@@ -21,38 +21,53 @@
           />
         </div>
 
-        <!-- <van-list
-          v-model="loading"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="onLoad"
-        > -->
-        <div class="q3">
+        <!-- <div class="q3">
           <ul class="q3ul">
             <li v-for="(item, index) in Product" :key="index">
               <img :src="item.wapBannerUrl" alt="" />
               <p>{{ item.name }}</p>
             </li>
           </ul>
+        </div> -->
+        <div class="bscroll" ref="bscroll">
+          <div class="bscroll-container q3">
+            <ul class="q3ul">
+              <li v-for="(item, index) in Product" :key="index">
+                <img :src="item.wapBannerUrl" alt="" />
+                <p>{{ item.name }}</p>
+              </li>
+            </ul>
+          </div>
         </div>
-        <!-- </van-list> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BScroll from "better-scroll";
 export default {
   data() {
     return {
       activeKey: 0,
       sidebar: [], //侧边栏数据集
       Product: {}, //商品数据
+      item: "",
     };
   },
   mounted() {
     this.cblsj(); //分类左侧侧边栏数据
     this.djsj(); //分类右侧商品数据
+    this.$nextTick(() => {
+      let bscrollDom = this.$refs.bscroll;
+      this.aBScroll = new BScroll(bscrollDom, {
+        // scrollY: true,
+        // click: true,
+      });
+    });
+
+    this.item = this.$router.history.current.path;
+    // console.log(this.item);
   },
   methods: {
     //分类左侧侧边栏数据
@@ -75,11 +90,16 @@ export default {
       } else {
         this.Product = result.data.categoryList;
       }
-      console.log(this.Product);
+      // console.log(this.Product);
     },
     //搜索栏获取焦点
     onSearch() {
-      this.$router.push("/search");
+      // this.$bus.$emit("push", this.item);"/search"
+      this.$router.push({
+        query: { name: this.item },
+        path: "/search",
+      });
+
       // console.log(11);
     },
   },
@@ -115,7 +135,8 @@ export default {
       border-top: 1px solid #ccc;
       height: 550px;
       // box-sizing: border-box;
-      overflow: auto;
+      // overflow: auto;
+
       .img {
         height: 120px;
         width: 100%;
@@ -127,22 +148,28 @@ export default {
           height: 96px;
         }
       }
+      .bscroll {
+        width: 100%;
+        height: 450px;
+        overflow: hidden;
+      }
       .q3 {
         width: 100%;
-
+        // height: 1000px;
+        overflow: auto;
         .q3ul {
           width: 100%;
-          height: 100%px;
+          // height: 100%;
           //display: flex;
           // flex-wrap:wrap
           //justify-content: center;
           //align-items: center;
 
-          overflow: auto;
+          // overflow: auto;
 
           li {
             width: 80px;
-            height: 80px;
+            height: 110px;
 
             margin: 15px 5px 5px 9px;
             // border-radius: 50%;
@@ -160,11 +187,6 @@ export default {
             }
           }
         }
-      }
-      .c {
-        width: 100px;
-        height: 100px;
-        background-color: pink;
       }
     }
   }

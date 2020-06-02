@@ -97,7 +97,11 @@ export default {
     },
     //点击导航右侧
     right1() {
-      this.$router.push("/search");
+      this.$router.push({
+        query: { name: this.$router.history.current.path },
+        path: "/search",
+      });
+      // this.$bus.$emit("isnav", "false");
     },
     //点击导航左侧
     left() {
@@ -112,7 +116,7 @@ export default {
     this.getspsj();
     //获取轮播图数据
     const result = await this.$api.zdm.swip();
-    console.log(result.data.data.navList);
+    // console.log(result.data.data.navList);
     //把一个数组拆分成多个数组
     const arr = result.data.data.navList;
     const len = 2;
@@ -126,7 +130,7 @@ export default {
     }
     //把多个数组插入swp中
     this.swp.push(...split_array(arr, len));
-    console.log(this.swp);
+    // console.log(this.swp);
     //new Swiper的时候，轮播图还未遍历，
     this.$nextTick(() => {
       var mySwiper = new Swiper(".swiper-container", {
