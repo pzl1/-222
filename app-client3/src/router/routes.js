@@ -6,18 +6,30 @@ import search from "../page/4.search"
 import personage from "../page/5.personage"
 export default [{
         path: "/",
-        component: home
+        component: home,
+        meta: {
+            showTab: true
+        }
     },
     {
         path: "/item",
-        component: classify
+        component: classify,
+        meta: {
+            showTab: true
+        }
     },
     {
         path: "/topic",
-        component: worth
+        component: worth,
+        meta: {
+            showTab: true
+        }
     }, {
         path: "/shopping",
-        component: shopping
+        component: shopping,
+        meta: {
+            showTab: true
+        }
     },
     {
         path: "/search",

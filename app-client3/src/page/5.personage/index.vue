@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="lodin1" v-if="isshow">
+    <div class="lodin1" v-if="isshow" v-show="!islogin">
       <van-nav-bar title="网易严选">
         <template #right>
           <van-icon name="search" size="28" @click="right1" />
@@ -16,12 +16,18 @@
           alt=""
         />
       </div>
-      <van-button type="danger" icon="phone-o" block class="but"
+      <van-button @click="next" type="danger" icon="phone-o" block class="but"
         >手机号快捷登录</van-button
       >
-      <van-button type="default" icon="envelop-o" block class="but but2"
+      <van-button
+        @click="next"
+        type="default"
+        icon="envelop-o"
+        block
+        class="but but2"
         >邮箱账号登录</van-button
       >
+      <p class="register" @click="register">注册账号</p>
       <div class="icon">
         <div class="icon1">
           <img
@@ -46,7 +52,7 @@
         </div>
       </div>
     </div>
-    <div class="lodin2">
+    <div class="lodin2" v-else v-show="!islogin">
       <van-nav-bar title="网易严选">
         <template #right>
           <van-icon name="search" size="28" @click="right1" />
@@ -62,16 +68,70 @@
           alt=""
         />
       </div>
+      <div class="from">
+        <van-form @submit="onSubmit">
+          <van-field
+            v-model="username"
+            name="用户名"
+            placeholder="请输入账号"
+            :rules="[{ required: true, message: '请填写用户名' }]"
+          />
+          <van-field
+            v-model="password"
+            type="password"
+            name="密码"
+            placeholder="请输入密码"
+            :rules="[{ required: true, message: '请填写密码' }]"
+          />
+          <div class="wt">
+            <span class="wt1">遇到问题？</span>
+            <span>短信快捷登录</span>
+          </div>
+          <div style="margin: 16px;">
+            <van-button
+              block
+              type="danger"
+              native-type="submit"
+              @click="loginandregistration"
+            >
+              {{ isregister ? "注册账号" : "登录" }}
+            </van-button>
+          </div>
+        </van-form>
+      </div>
+      <div class="qt"><p @click="turn">其他登录方式></p></div>
+    </div>
+    <div class="login3" v-show="islogin">
+      <van-nav-bar title="网易严选">
+        <template #right>
+          <van-icon name="search" size="28" @click="right1" />
+          <van-icon name="shopping-cart-o" size="28" @click="right1" />
+        </template>
+        <template #left>
+          <van-icon name="home-o" size="28" @click="left" />
+        </template>
+      </van-nav-bar>
+      <p>登录成功</p>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
-    return { isshow: false };
+    return {
+      isshow: true, //登录切换
+      username: "",
+      password: "",
+      isregister: false, //注册切换
+      islogin: false, //是否登录
+    };
   },
   methods: {
+    onSubmit(values) {
+      console.log(values);
+    },
     //点击导航右侧
     right1() {
       this.$router.push({
@@ -83,6 +143,66 @@ export default {
     //点击导航左侧
     left() {
       this.$router.push("/");
+    },
+    //其他登录方式
+    turn() {
+      //   this.$router.push("/personage");
+      this.isshow = true; //登录切换
+      this.isregister = false; //注册切换
+    },
+    //手机号快捷登录
+    next() {
+      this.isshow = false;
+      this.username = "";
+      this.password = "";
+    },
+    //注册账号
+    register() {
+      this.isshow = false; //登录切换
+      this.isregister = true; //注册切换
+      this.username = "";
+      this.password = "";
+    },
+    //点击登录或者注册
+    async loginandregistration() {
+      const { username, password } = this;
+      // console.log(username, password);
+      if (this.isregister) {
+        //注册
+        // console.log("注册");
+        const result = await this.$api.register.register({
+          username,
+          password,
+        });
+        // console.log(result.data.code);
+        if (result.data.code == 200) {
+          console.log(result);
+          Toast.success(`${result.data.msg}`);
+          this.username = "";
+          this.password = "";
+          this.isshow = true;
+        } else {
+          Toast.fail(`${result.data.msg}`);
+        }
+      } else {
+        //登录
+        // console.log("登录");
+        const result = await this.$api.login.login({
+          username,
+          password,
+        });
+        // console.log(result.data.code);
+        if (result.data.code == 200) {
+          console.log(result);
+          Toast.success(`${result.data.msg}`);
+
+          this.username = "";
+          this.password = "";
+          this.islogin = true;
+        } else {
+          Toast.fail(`${result.data.msg}`);
+        }
+      }
     },
   },
 };
@@ -111,6 +231,12 @@ export default {
     color: red;
     border: 1px solid red;
     background-color: rgb(238, 238, 238);
+  }
+  .register {
+    width: 60px;
+    float: right;
+    margin: 10px 15px 0 0;
+    height: 20px;
   }
   .icon {
     display: flex;
@@ -147,6 +273,28 @@ export default {
         height: 45px;
       }
     }
+    .wt {
+      display: flex;
+      justify-content: space-between;
+      .wt1 {
+        color: rgb(100, 95, 95);
+      }
+      span {
+        margin: 20px 20px 0px 20px;
+        font-size: 14px;
+      }
+    }
+  }
+  .qt {
+    width: 120px;
+    height: 20px;
+    margin: auto;
+    text-align: center;
+    margin-top: 30px;
+  }
+  p {
+    font-size: 14px;
+    margin: auto;
   }
 }
 </style>

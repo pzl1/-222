@@ -18,7 +18,7 @@
         <span>严选好物 用心生活</span>
       </div>
     </div>
-    <div class="floa">
+    <div class="floa ">
       <div class="sw">
         <div class="swiper-container">
           <div class="swiper-wrapper">
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="splb">
+    <div class="splb ">
       <van-list
         v-model="loading"
         :finished="finished"
@@ -41,12 +41,16 @@
         @load="onLoad"
         offset="0"
       >
-        <div class="sp" v-for="(item, index) in list" :key="index">
-          <img :src="item.picUrl" alt="" />
-          <div>{{ item.title }}</div>
+        <div class="van-clearfix">
+          <div class="sp " v-for="(item, index) in list" :key="index">
+            <img :src="item.picUrl" alt="" />
+            <span>{{ item.title }}</span>
+            <div style="clear: both"></div>
+          </div>
         </div>
       </van-list>
     </div>
+    <div style="clear: both;"></div>
   </div>
 </template>
 
@@ -75,6 +79,7 @@ export default {
 
       this.list.push(...result.data.data.result[0].topics);
       this.loading = false;
+      console.log(this.list);
     },
 
     onLoad() {
@@ -93,7 +98,7 @@ export default {
         //   this.finished = true;
         //   // this.loading = false;
         // }
-      }, 1000);
+      }, 500);
     },
     //点击导航右侧
     right1() {
@@ -223,26 +228,28 @@ export default {
   width: 100%;
 
   margin: 150px auto 0;
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
 
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   background-color: rgb(238, 238, 238);
+  // overflow: hidden;
 
+  width: 100%;
   .sp {
     width: 45%;
     height: 300px;
     border: 1px solid #ccc;
     background-color: white;
     margin: 5px 0 0 10px;
-    flex-grow: 0;
+    // flex-grow: 0;
     float: left;
 
     img {
       width: 100%;
       height: 170px;
     }
-    div {
+    span {
       font-size: 14px;
       padding: 5px;
     }

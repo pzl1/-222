@@ -11,7 +11,7 @@
             @cancel="onCancel"
           />
         </form>
-        <div v-if="issech">
+        <div v-if="issech" class="">
           <p class="p1">热门搜索</p>
           <van-tag
             plain
@@ -22,9 +22,16 @@
             >{{ item.keyword }}</van-tag
           >
         </div>
-        <div class="ss">
-          <p v-for="(item, index) in name" :key="index">{{ item }}</p>
-        </div>
+
+        <van-cell
+          class="ss"
+          size="large"
+          :title="`${item}`"
+          is-link
+          v-for="(item, index) in name"
+          :key="index"
+        />
+        <!-- <p v-for="(item, index) in name" :key="index">{{ item }}</p> -->
       </div>
       <div></div>
     </div>
@@ -48,11 +55,12 @@ export default {
   },
   methods: {
     async onSearch(val) {
-      //   this.issech = false;
+      this.issech = false;
       //   console.log(Toast(val));
       // console.log(val);
       const result2 = await this.$api.search.searchname(val);
       // console.log(result2.data.data);
+      console.log(result2);
       this.name = result2.data.data;
       if (this.name.length > 0) {
         this.issech = false;
@@ -86,18 +94,23 @@ export default {
     height: 300px;
     background-color: white;
     .tag {
-      width: 95%;
+      width: 100%;
       height: 300px;
       background-color: white;
       margin: auto;
       .p1 {
         font-size: 14px;
         color: rgb(138, 136, 136);
+        margin-left: 10px;
       }
       .van {
-        margin: 5px;
+        margin: 10px;
       }
     }
+  }
+  .ss {
+    width: 100%;
+    // background-color: red;
   }
 }
 </style>

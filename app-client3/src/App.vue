@@ -3,34 +3,33 @@
   <div class="a">
     <!-- <home /> -->
     <router-view></router-view>
-    <div class="b" v-show="isnav">
-      <van-tabbar v-model="active" v-if="isnav">
-        <van-tabbar-item icon="home-o">
-          <router-link to="/">
-            首页
-          </router-link>
-        </van-tabbar-item>
-        <van-tabbar-item icon="apps-o ">
-          <router-link to="/item">
-            分类
-          </router-link>
-        </van-tabbar-item>
-        <van-tabbar-item icon="good-job-o">
-          <router-link to="/topic">
-            值得买
-          </router-link>
-        </van-tabbar-item>
 
-        <van-tabbar-item icon="shopping-cart-o">
-          <router-link to="/shopping">
-            购物车
-          </router-link>
-        </van-tabbar-item>
-        <van-tabbar-item icon="user-circle-o">
-          <router-link to="/personage">个人</router-link>
-        </van-tabbar-item>
-      </van-tabbar>
-    </div>
+    <van-tabbar v-model="active" route v-if="$route.meta.showTab">
+      <van-tabbar-item icon="home-o">
+        <router-link to="/">
+          首页
+        </router-link>
+      </van-tabbar-item>
+      <van-tabbar-item icon="apps-o ">
+        <router-link to="/item">
+          分类
+        </router-link>
+      </van-tabbar-item>
+      <van-tabbar-item icon="good-job-o">
+        <router-link to="/topic">
+          值得买
+        </router-link>
+      </van-tabbar-item>
+
+      <van-tabbar-item icon="shopping-cart-o">
+        <router-link to="/shopping">
+          购物车
+        </router-link>
+      </van-tabbar-item>
+      <van-tabbar-item icon="user-circle-o">
+        <router-link to="/personage">个人</router-link>
+      </van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
